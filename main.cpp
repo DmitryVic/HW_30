@@ -144,6 +144,14 @@ int main() {
         fut.wait(); // Ожидаем завершения сортировки
         clock_t time_end = clock();
         std::cout << "Время быстрой сортировки с пулом потоков: " << double(time_end - time_start) / double(CLOCKS_PER_SEC) << " с" << std::endl;
+        try {
+            fut.get();
+            std::cout << "Без ошибок!" << std::endl;
+        } catch(const std::exception& e) {
+            std::cout << "Была ошибка: " << e.what() <<  std::endl;
+        }
+
+        
     }
 
     {
@@ -152,6 +160,7 @@ int main() {
         std::sort(arr2, arr2 + N);
         clock_t time_end = clock();
         std::cout << "Время последовательной сортировки: " << double(time_end - time_start) / double(CLOCKS_PER_SEC) << " с" << std::endl;
+        
     }
 
     // Освобождаем память
